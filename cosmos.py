@@ -6,12 +6,28 @@ def fetch_planet_data():
     response = requests.get(url)
     planets = response.json()['bodies']
 
-    #process each planet info
     for planet in planets:
         if planet['isPlanet']:
-            name = #get planet English name
-            mass = #get planet mass
-            orbit_period = #get planet orbit period
+            name = planet["name"]
+            mass = planet["mass"]["massValue"]
+            orbit_period = planet["sideralOrbit"]
             print(f"Planet: {name}, Mass: {mass}, Orbit Period: {orbit_period} days")
 
+def find_heaviest_planet():
+    url = "https://api.le-systeme-solaire.net/rest/bodies/"
+    response = requests.get(url)
+    planets = response.json()['bodies']
+    mass_list = {}
+
+    for planet in planets:
+        if planet['isPlanet']:
+            mass = planet["mass"]["massValue"]
+            name = planet["name"]
+            mass_list[name]= mass
+    Keymax = max(mass_list, key= lambda x: mass_list[x])
+    weight = mass_list[Keymax]
+    print(f"Heaviest planet is {Keymax} with a weight of {weight}")
+            
+    
 fetch_planet_data()
+find_heaviest_planet()
