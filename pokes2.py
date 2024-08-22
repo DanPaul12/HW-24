@@ -17,4 +17,18 @@ fetch_pokemon_data("bulbasaur")
 fetch_pokemon_data("charmander")
 
 def calculate_average_weight(pokemon_list):
-    pass
+    try:
+        weights = []
+        for name in pokemon_list:
+            api_url = f"https://pokeapi.co/api/v2/pokemon/{name}"
+            response = requests.get(api_url)
+            json_data = response.text
+            poke_data = json.loads(json_data)
+            weight = poke_data["weight"]
+            weights.append(weight)
+        average = sum(weights)/3
+        print(f"The average weight is {average}")
+    except:
+        pass
+
+calculate_average_weight(pokemon_names)
